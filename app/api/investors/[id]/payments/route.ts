@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import { flaskRequest } from "@/lib/flask";
 import { requireCsrf } from "@/lib/security";
 
-interface RouteContext { params: Promise<{id: number;}>; }
+interface RouteContext { params: Promise<{id: string;}>; }
 export const dynamic = "force-dynamic";
 
 export async function GET( request: Request, context: RouteContext ) {
     const { id } = await context.params;
     try {
-        const { response, data } = await flaskRequest(`/investors/${encodeURIComponent(id)}/payments`,
+        const { response, data } = await flaskRequest(`/investors/${encodeURIComponent(Number(id))}/payments`,
             {
                 method: "GET",
                 authenticated: true,
