@@ -74,7 +74,9 @@ export async function POST(request: Request) {
             name: SESSION_COOKIE_NAME,
             value: result.token,
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            secure:
+                process.env.NODE_ENV === "production" &&
+                process.env.APP_ORIGIN?.startsWith("https://"),
             sameSite: "lax",
             path: "/",
             maxAge: 60 * 60 * 12,
